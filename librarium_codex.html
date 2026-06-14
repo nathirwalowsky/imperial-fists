@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Librarium Codex — VII Legion Imperial Fists</title>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-dark: #8B6914;
+    --parchment: #F5F0E8;
+    --parchment-dark: #EDE5D0;
+    --ink: #1A1410;
+    --ink-muted: #4A3F30;
+    --ink-faint: #8A7A60;
+    --border: #C9A84C40;
+    --new-bg: #E8F5E8;
+    --new-border: #2D7A2D;
+    --new-label: #1A5C1A;
+    --changed-bg: #FFF5E0;
+    --changed-border: #C17A00;
+    --changed-label: #8B5500;
+    --removed-bg: #FDE8E8;
+    --removed-border: #C0392B;
+    --removed-label: #8B0000;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #2A1F0E;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .outer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .header {
+    text-align: center;
+    padding: 2.5rem 2rem 2rem;
+    border-bottom: 1px solid var(--gold);
+    margin-bottom: 0;
+    background: var(--parchment);
+    border-radius: 4px 4px 0 0;
+  }
+
+  .chapter-mark {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 0.75rem;
+  }
+
+  .header h1 {
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+  }
+
+  .header .sub {
+    font-size: 14px;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .toggle-bar {
+    display: flex;
+    gap: 0;
+    justify-content: center;
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    overflow: hidden;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  .toggle-btn {
+    padding: 8px 20px;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--gold-dark);
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .toggle-btn.active {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .toggle-btn:not(.active):hover {
+    background: var(--gold-light);
+  }
+
+  .toggle-divider {
+    width: 1px;
+    background: var(--gold);
+  }
+
+  .doc {
+    background: var(--parchment);
+    padding: 2.5rem 3rem;
+    border-radius: 0 0 4px 4px;
+  }
+
+  .legend {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: var(--parchment-dark);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .legend.hidden { display: none; }
+
+  .legend-label {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  .legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-new { background: #2D7A2D; }
+  .dot-changed { background: #C17A00; }
+  .dot-removed { background: #C0392B; }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.06em;
+    margin: 2.5rem 0 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+
+  h4 {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 1.25rem 0 0.4rem;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+
+  ul {
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  li {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  li strong { font-weight: 600; }
+  em { font-style: italic; }
+
+  .muted {
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  .tier-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  .tier-badge {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 2px;
+    border: 1px solid;
+  }
+
+  .badge-lex { background: #E8F0F8; color: #1A4A7A; border-color: #1A4A7A40; }
+  .badge-cod { background: #E8F2E8; color: #1A5C1A; border-color: #1A5C1A40; }
+  .badge-epi { background: #F8F0E0; color: #7A4A00; border-color: #7A4A0040; }
+  .badge-cl  { background: #F0EAF8; color: #4A1A7A; border-color: #4A1A7A40; }
+
+  .meta {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 0.75rem;
+    font-style: italic;
+  }
+
+  .changed {
+    background: var(--changed-bg);
+    border-left: 3px solid var(--changed-border);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0 3px 3px 0;
+    margin: 0.4rem 0;
+  }
+
+  .new {
+    background: var(--new-bg);
+    border-left: 3px solid var(--new-border);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0 3px 3px 0;
+    margin: 0.4rem 0;
+  }
+
+  .removed {
+    background: var(--removed-bg);
+    border-left: 3px solid var(--removed-border);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0 3px 3px 0;
+    margin: 0.4rem 0;
+  }
+
+  .changed p, .changed li, .new p, .new li { margin-bottom: 0; }
+  .removed li { text-decoration: line-through; color: var(--ink-muted); margin-bottom: 0; }
+  .removed p { text-decoration: line-through; color: var(--ink-muted); margin-bottom: 0; }
+
+  .cl {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .cl-c { color: var(--changed-label); }
+  .cl-n { color: var(--new-label); }
+  .cl-r { color: var(--removed-label); }
+
+  .highlight-block { display: block; }
+  .clean-only { display: none; }
+
+  body.clean-view .highlight-block { display: none !important; }
+  body.clean-view .clean-only { display: block; }
+  body.clean-view .removed { display: none !important; }
+  body.clean-view .new { background: transparent; border-left: none; padding: 0; margin: 0; }
+  body.clean-view .new .cl { display: none; }
+  body.clean-view .changed { background: transparent; border-left: none; padding: 0; margin: 0; }
+  body.clean-view .changed .cl { display: none; }
+
+  .footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+    border-top: 1px solid var(--gold);
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    .doc { padding: 1.5rem 1.25rem; }
+    .header { padding: 1.5rem 1rem 1.25rem; }
+    .header h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="outer">
+
+  <div class="header">
+    <div class="chapter-mark">Imperial Fists &nbsp;·&nbsp; VII Legion &nbsp;·&nbsp; Librarium</div>
+    <h1>Codex Librarium</h1>
+    <p class="sub">Progression requirements and role definitions</p>
+    <div class="toggle-bar">
+      <button class="toggle-btn active" onclick="setView('changes')" id="btn-changes">Show changes</button>
+      <div class="toggle-divider"></div>
+      <button class="toggle-btn" onclick="setView('clean')" id="btn-clean">Clean version</button>
+    </div>
+  </div>
+
+  <div class="doc">
+
+    <div class="legend" id="legend">
+      <span class="legend-label">Change key:</span>
+      <div class="legend-item"><span class="legend-dot dot-new"></span> New addition</div>
+      <div class="legend-item"><span class="legend-dot dot-changed"></span> Modified</div>
+      <div class="legend-item"><span class="legend-dot dot-removed"></span> Removed</div>
+      <span style="font-size:13px;color:var(--ink-faint);">Unmarked = unchanged from original</span>
+    </div>
+
+    <h2>Role overview</h2>
+    <p>The Librarium of the VII Legion is the beating heart of its narrative soul. Composed of Lexicanum, Codiciers, Epistolaries, and the Chief Librarian, its members are charged with preserving the spirit of the server, guiding its evolving story, and strengthening the Chapter's legacy through lore, creativity, and ritual.</p>
+    <p>Whether crafting chronicles of battle, aiding High Command in narrative planning, or inspiring others through works of fiction, paint, or voice — the Librarium serves as both archive and architect of the Imperial Fists' collective memory. Its duties extend beyond the walls of the Fortress-Monastery, fostering connections with allied chapters and ensuring the purity and purpose of the VII's enduring legend.</p>
+
+    <h2>Librarium responsibilities</h2>
+    <ul>
+      <li><strong>Guardians of narrative continuity</strong>: Preserving the integrity of the server's ongoing narrative — events, developments, and character arcs remain coherent and immersive.</li>
+      <li><strong>Chroniclers of the Legion</strong>: Recording notable campaigns, moments of valor, and significant player actions in detailed chronicles that serve as both reference and inspiration.</li>
+      <li><strong>Weavers of in-game lore</strong>: Drawing from in-game situations and player interactions to expand the world through story arcs, minor details, and immersive moments.</li>
+      <li><strong>Architects of campaigns</strong>: Supporting High Command in designing events, honors, and challenges grounded in the lore.</li>
+      <li><strong>Heralds beyond the bastion</strong>: Representing the Chapter through writing, video, podcasting, miniature painting, and other creative endeavors.</li>
+      <li><strong>Lore consistency advisor</strong>: Ensuring all narrative developments align with existing lore — both official and server-established canon.</li>
+      <li><strong>RP mediation</strong>: Helping resolve conflicts in roleplay through narrative logic or established character motivations.</li>
+      <li><strong>Character development support</strong>: Helping players flesh out or evolve their characters' backstories, motivations, and arcs.</li>
+      <li><strong>Archival curation</strong>: Maintaining an in-universe archive — classified dossiers, mission logs, battle reports — accessible to members.</li>
+      <li><strong>Ceremonial roles</strong>: Leading rites, oaths, or commemorations such as oaths of moment and Remembrancer gatherings.</li>
+      <li><strong>Psychic warfare and battlefield intelligence</strong>: Representing the esoteric and strategic dimension of warfare by interpreting visions, omens, or anomalies during campaigns.</li>
+    </ul>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New — honor verification duty</div>
+      <ul><li><strong>Keepers of the Roll of Honour</strong>: The Librarium holds authority to verify and authenticate honors submitted by members of the Chapter. Librarium members review, authenticate, and inscribe submitted honors into the permanent record, acting as both witness and arbiter of the Chapter's achievements. Honor verification counts as an alternative to Battle Saga production at all tiers.</li></ul>
+    </div>
+    <div class="removed highlight-block">
+      <div class="cl cl-r">Removed — AAL no longer exists</div>
+      <ul><li>Liaisons of the Librariae: Cooperating with other Librariums across the Adeptus Astartes Legions (AAL), they help establish a shared inter-chapter narrative and shared universe consistency.</li></ul>
+    </div>
+
+    <hr class="divider">
+    <h2>Tier duties and expectations</h2>
+
+    <div class="tier-header">
+      <h3>Lexicanum</h3>
+      <span class="tier-badge badge-lex">Veteran / Battle Brother equivalent</span>
+    </div>
+    <span class="muted">"The Witnesses of the Legion. Those who stand to remember."</span>
+    <p class="meta"><strong>Narrative focus:</strong> Reactive &nbsp;·&nbsp; <strong>Authority:</strong> Apprentice / Entry &nbsp;·&nbsp; <strong>Tone:</strong> Observant, respectful, disciplined</p>
+
+    <h4>Responsibilities</h4>
+    <ul>
+      <li><strong>Adept chronicler</strong>: Crafts Battle Sagas based on player reports, screenshots, and game data, reflecting the tone of the VII Legion — stoic, honorable, unyielding.</li>
+      <li><strong>Keeper of fragments</strong>: Maintains minor logs, quotes, or battlefield impressions, helping create a larger mosaic of the Chapter's memory.</li>
+      <li><strong>Liturgical apprentice</strong>: Assists in preparing ceremonial language — oaths, rites — and learns from senior Librarium members the ways of the Word and Warp.</li>
+      <li><strong>Lore scribe in training</strong>: Learns the server's lore framework and maintains consistency in their writings; submits narrative entries for review if needed.</li>
+      <li><strong>Lore pathfinding</strong>: Assists new members in selecting Warhammer 40K novels, short stories, or codices that align with the spirit of the Imperial Fists.</li>
+    </ul>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New</div>
+      <ul><li><strong>Honor witness</strong>: May assist in honor verification under direct supervision of a Codicier or above. No independent verification authority at this tier.</li></ul>
+    </div>
+
+    <h4>Presence expectation</h4>
+    <div class="changed">
+      <div class="cl cl-c highlight-block">Modified — honor verification added as alternative</div>
+      <p>One Battle Saga per month — or verification of a minimum of 2 member honors per month under supervision. Quality over quantity.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="tier-header">
+      <h3>Codicier</h3>
+      <span class="tier-badge badge-cod">Sergeant / NCO equivalent</span>
+    </div>
+    <span class="muted">"The Quill of the Chapter. The reliable path to the Legion's vision."</span>
+    <div class="changed highlight-block" style="margin-bottom:0.75rem;">
+      <div class="cl cl-c">Modified — authority label corrected to match org chart</div>
+      <p style="margin:0;" class="meta"><strong>Authority:</strong> NCO / Trusted Senior Narrator &nbsp;·&nbsp; <strong>Narrative focus:</strong> Mixed (Reactive + Proactive) &nbsp;·&nbsp; <strong>Tone:</strong> Directive, guiding, reliable</p>
+    </div>
+    <p class="meta clean-only"><strong>Authority:</strong> NCO / Trusted Senior Narrator &nbsp;·&nbsp; <strong>Narrative focus:</strong> Mixed (Reactive + Proactive) &nbsp;·&nbsp; <strong>Tone:</strong> Directive, guiding, reliable</p>
+
+    <h4>Responsibilities</h4>
+    <ul>
+      <li><strong>Narrative synthesizer</strong>: Draws connections between multiple AARs and broader server events, turning isolated scenes into ongoing threads, character arcs, or mysteries.</li>
+      <li><strong>Tactical lore support</strong>: Aids High Command in designing small lore events, challenges, honors, or pre/post-mission lore briefings.</li>
+      <li><strong>Mentor to Lexicanum</strong>: Provides guidance and feedback to Lexicanum members, helping them improve tone, clarity, and lore adherence.</li>
+      <li><strong>Lore consistency enforcer</strong>: Reviews contributions and flags inconsistencies or canon breaks; proposes corrections or solutions.</li>
+      <li><strong>Creative collaboration</strong>: Works with artists, video editors, or writers on Legion-focused creative projects for public viewing.</li>
+      <li><strong>Tabletop and lore guidance</strong>: Provides support to members curious about playing the Imperial Fists on the tabletop.</li>
+    </ul>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New — recruitment duty</div>
+      <ul><li><strong>Librarium recruiter</strong>: When conducting AARs alongside Scouts or Battle Brothers, actively assesses their narrative interest and suitability for the Librarium. Reports findings to an Epistolary or above. The Codicier is the Librarium's primary point of recruitment within the Chapter.</li></ul>
+    </div>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New — honor verification</div>
+      <ul><li><strong>Honor arbiter</strong>: Holds independent authority to review and verify honor submissions from Chapter members. Ensures submitted deeds meet the standard of the Roll of Honour before inscription. Oversees Lexicanum honor witnesses in this duty.</li></ul>
+    </div>
+
+    <h4>Presence expectation</h4>
+    <div class="changed">
+      <div class="cl cl-c highlight-block">Modified — honor verification added as alternative</div>
+      <p>At least one narrative piece per month — short story, consolidation of AARs, event teaser, or lore initiative — or verification of a minimum of 4 member honors per month.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="tier-header">
+      <h3>Epistolary</h3>
+      <span class="tier-badge badge-epi">Lieutenant equivalent</span>
+    </div>
+    <span class="muted">"The Architect of Memory. Herald of the Phalanx and Dorn's wisdom incarnate."</span>
+    <p class="meta"><strong>Narrative focus:</strong> Proactive &nbsp;·&nbsp; <strong>Authority:</strong> High / Shaper &nbsp;·&nbsp; <strong>Tone:</strong> Visionary, solemn, commanding</p>
+
+    <h4>Responsibilities</h4>
+    <ul>
+      <li><strong>Narrative architect</strong>: Leads the creation of long-form arcs, narrative seasons, or server-wide lore frameworks.</li>
+      <li><strong>Strategic lore advisor</strong>: Works with High Command to ensure narrative cohesion across operations, character development, and factional relations.</li>
+      <li><strong>Guardian of the Lexicon</strong>: Maintains and organizes the Librarium archive — chronicles, quotes, battle records, oaths, honors.</li>
+      <li><strong>Judge of the Word</strong>: Promotes or recommends Lexicanum and Codiciers for advancement based on merit, tone, and contribution.</li>
+      <li><strong>Lore and rules steward</strong>: Offers deeper guidance in thematic army building, lore briefings, and recommended reading cycles.</li>
+    </ul>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New — executive and representative role</div>
+      <ul>
+        <li><strong>Executor of the Chief Librarian's will</strong>: The public-facing voice of the Librarium — announcing decisions made by the Chief Librarian, coordinating with senior officers on implementation, and acting as the bridge between Librarium policy and chapter-wide execution.</li>
+        <li><strong>Acting Chief Librarian</strong>: When the Chief Librarian seat is vacant, the most senior Epistolary by time in rank assumes all executive and representative duties on an interim basis until the seat is filled.</li>
+      </ul>
+    </div>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New — honor authority</div>
+      <ul><li><strong>Master of the Roll</strong>: Holds final authority over disputed or complex honor verifications escalated by Codiciers. May establish or update honor verification standards. Leads full honor review cycles — reviewing, authenticating, and inscribing batches of pending submissions with documented reasoning on disputed claims.</li></ul>
+    </div>
+    <div class="removed highlight-block">
+      <div class="cl cl-r">Removed — replaced by executive role above</div>
+      <ul><li>Public Voice of the Chapter: Represents the server through sanctioned public works — publishing longer pieces, managing external narrative projects.</li></ul>
+    </div>
+
+    <h4>Presence expectation</h4>
+    <div class="changed">
+      <div class="cl cl-c highlight-block">Modified — honor verification added as alternative</div>
+      <p>Once per month contributions that shape narrative direction — fewer in number, but of high quality and strategic value. Alternatively, oversight of a full honor review cycle fulfils the monthly expectation.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="tier-header">
+      <h3>Chief Librarian</h3>
+      <span class="tier-badge badge-cl">Captain equivalent</span>
+    </div>
+    <span class="muted">"The living memory of the Chapter. Keeper of the Phalanx's soul."</span>
+    <p class="meta"><strong>Narrative focus:</strong> Strategic &nbsp;·&nbsp; <strong>Authority:</strong> Supreme within the Librarium &nbsp;·&nbsp; <strong>Tone:</strong> Austere, final, visionary</p>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New — tier fully defined for the first time</div>
+      <h4>Responsibilities</h4>
+      <ul>
+        <li><strong>Legislator of the Librarium</strong>: Holds sole authority to create, amend, or retire Librarium rules, honor standards, narrative canon, and creative policies. No Librarium policy change is valid without the Chief Librarian's sanction.</li>
+        <li><strong>Director of the Librarium</strong>: Oversees the duties, output, and discipline of all Librarium members across all tiers.</li>
+        <li><strong>Keeper of the Great Chronicle</strong>: Custodian of the Chapter's entire historical record and long-term archival integrity across narrative seasons and campaigns.</li>
+        <li><strong>Seal of the Roll of Honour</strong>: Ultimate authority on all honor verification matters. All Roll of Honour inscriptions are final only upon the Chief Librarian's sanction.</li>
+        <li><strong>Voice of the Librarium in High Command</strong>: Represents the Librarium's perspective in all chapter-level decisions, events, and policy discussions.</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+    <h2>Progression requirements</h2>
+    <p>Librarians of all levels are to maintain a record in the Librarium of heroic feats performed by the Imperial Fists, while also guiding their brethren in the ways of Rogal Dorn.</p>
+
+    <div class="tier-header" style="margin-top:1.5rem;">
+      <h3>Lexicanum</h3>
+      <span class="tier-badge badge-lex">Veteran / Battle Brother equivalent</span>
+    </div>
+
+    <h4>Time and service</h4>
+    <ul><li>Maintain and hold the role of Battle Brother for a minimum of 7 days</li></ul>
+
+    <h4>Battlefield proficiency</h4>
+    <ul>
+      <li>Complete 10 Operations with Battle Brothers of the Imperial Fists server</li>
+      <li>Have at least one Astartes Class at Full Prestige</li>
+    </ul>
+    <div class="removed highlight-block">
+      <div class="cl cl-r">Removed — descriptor, not an action</div>
+      <ul><li>Have proficient knowledge of Majoris level enemies</li></ul>
+    </div>
+
+    <h4>Ordeals</h4>
+    <ul><li>Completed either the <em>Thousand Dead Sons Ordeal</em> or <em>Xenos Exterminator Ordeal</em></li></ul>
+
+    <h4>Creative output</h4>
+    <div class="changed">
+      <div class="cl cl-c highlight-block">Modified — honor verification added as alternative</div>
+      <ul><li>Submit at least 1 Battle Saga or several smaller narrative pieces — or verify and document at least 2 member honor submissions under supervision of a Codicier or above</li></ul>
+    </div>
+    <div class="removed highlight-block">
+      <div class="cl cl-r">Removed — descriptor, not an action</div>
+      <ul><li>Understand that Librarians are primarily a supporting role, with the intent to chronicle the deeds of Brothers of the Legion</li></ul>
+    </div>
+
+    <h4>Endorsement</h4>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New</div>
+      <ul><li>Requires endorsement from a Codicier or above. If no Codicier is available, High Command may endorse directly. Promotion is subject to an internal poll among Librarium members and relevant High Command officers. Any reservations raised must be addressed before promotion is confirmed. No other specialist role holds endorsement authority over the Librarium.</li></ul>
+    </div>
+
+    <hr class="divider">
+
+    <div class="tier-header">
+      <h3>Codicier</h3>
+      <span class="tier-badge badge-cod">Sergeant / NCO equivalent</span>
+    </div>
+
+    <h4>Time and service</h4>
+    <ul><li>Maintain and hold the role of Lexicanum for a minimum of 15 days</li></ul>
+
+    <h4>Battlefield proficiency</h4>
+    <ul>
+      <li>Complete 10 Lethal or higher Operations with Battle Brothers of the Imperial Fists server, guiding Brothers in killing Terminus enemies</li>
+      <li>Have at least 3 Astartes Classes at Full Prestige</li>
+    </ul>
+    <div class="removed highlight-block">
+      <div class="cl cl-r">Removed — covered by the Lethal ops requirement above</div>
+      <ul><li>Have proficient knowledge of Terminus level enemies</li></ul>
+    </div>
+
+    <h4>Ordeals</h4>
+    <ul><li>Completed either the <em>Rubricae Eliminator</em> or <em>Tyranid Warrior Eliminator</em> Ordeal</li></ul>
+
+    <h4>Mentorship and recruitment</h4>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New — replaces vague mentorship requirement</div>
+      <ul>
+        <li>Complete at least 3 Operations alongside a member actively undertaking Scout or Battle Brother trials, taking an active supporting role. These 3 ops are separate from the 10 Lethal ops requirement.</li>
+        <li>Submit a brief AAR note for each mentorship op. Where appropriate, assess the member's potential interest in joining the Librarium and report findings to an Epistolary or above.</li>
+      </ul>
+    </div>
+
+    <h4>Creative output</h4>
+    <div class="changed">
+      <div class="cl cl-c highlight-block">Modified — honor verification added as alternative</div>
+      <ul><li>Submit at least 4 total Battle Sagas or one longer story arc (multi-post or multi-scene) — or independently verify and document at least 6 member honor submissions</li></ul>
+    </div>
+    <ul><li>Write at least 1 short lore piece to expand the Chapter's culture or legends (e.g. lore of a squad, description of a relic, Imperial Fists motto reinterpretation)</li></ul>
+    <div class="changed">
+      <div class="cl cl-c highlight-block">Modified — examples added to clarify scope</div>
+      <ul><li>Contribute to or initiate at least one creative project or server initiative. This includes but is not limited to: writing seasonal missions or lore briefings, creating new honor proposals, contributing creative writing to existing server initiatives, collaborative storytelling, or lore compendium entries. What counts is determined by an Epistolary or above.</li></ul>
+    </div>
+
+    <h4>Endorsement</h4>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New</div>
+      <ul><li>Requires endorsement from an Epistolary or above. If no Epistolary is available, High Command may endorse directly. Promotion is subject to an internal poll among Librarium members and relevant High Command officers. No other specialist role holds endorsement authority over the Librarium.</li></ul>
+    </div>
+
+    <hr class="divider">
+
+    <div class="tier-header">
+      <h3>Epistolary</h3>
+      <span class="tier-badge badge-epi">Lieutenant equivalent</span>
+    </div>
+
+    <h4>Time and service</h4>
+    <ul><li>Maintain and hold the role of Codicier for a minimum of 21 days</li></ul>
+
+    <h4>Battlefield proficiency</h4>
+    <ul><li>Complete 10 Absolute difficulty Operations — or organize 3 narrative-focused missions with supporting pre- or post-op lore</li></ul>
+
+    <h4>Ordeals</h4>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New — deliberate decision documented</div>
+      <p style="margin:0;">No ordeal is required at this tier. The Epistolary's battlefield record is considered established by the time of elevation.</p>
+    </div>
+
+    <h4>Creative output</h4>
+    <ul>
+      <li>Submit a completed narrative cycle (e.g. a 3-part short story, character development arc, Chapter campaign document, or connected Battle Sagas)</li>
+      <li>Create and publish 1 masterwork lore entry (e.g. a Chapter doctrine, philosophical text, war sermon, or remembrancer report)</li>
+    </ul>
+    <div class="removed highlight-block">
+      <div class="cl cl-r">Removed — descriptor, not an action</div>
+      <ul><li>Must be recognized for having excellent lore accuracy and tone fidelity</li></ul>
+    </div>
+
+    <h4>Leadership and mentorship</h4>
+    <ul><li>Serve as a narrative advisor to High Command or coordinate 1 lore-supporting campaign or server event</li></ul>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New</div>
+      <ul><li>Provide documented feedback on at least 2 narrative submissions by Lexicanum members, demonstrating active mentorship within the Librarium</li></ul>
+    </div>
+
+    <h4>Honor verification</h4>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New</div>
+      <ul><li>Lead at least one full honor verification cycle — review, authenticate, and inscribe a batch of pending member honor submissions, resolving any disputed claims with documented reasoning</li></ul>
+    </div>
+
+    <h4>Endorsement</h4>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New</div>
+      <ul><li>Requires endorsement from the Chief Librarian. If the seat is vacant, High Command endorses directly. Promotion is subject to an internal poll among Librarium members and relevant High Command officers. No other specialist role holds endorsement authority over the Librarium.</li></ul>
+    </div>
+
+    <hr class="divider">
+
+    <div class="tier-header">
+      <h3>Chief Librarian</h3>
+      <span class="tier-badge badge-cl">Captain equivalent</span>
+    </div>
+    <div class="new">
+      <div class="cl cl-n highlight-block">New — tier fully defined for the first time</div>
+      <h4>Appointment</h4>
+      <ul>
+        <li>Elevated by appointment of High Command — not by trial</li>
+        <li>Time served as Epistolary is the primary criterion for consideration, though High Command may weigh additional factors including narrative contribution, leadership conduct, and the needs of the Chapter at the time of appointment</li>
+        <li>Requires endorsement from at least one active Epistolary</li>
+      </ul>
+      <h4>Upon elevation</h4>
+      <ul>
+        <li>Assumes custodianship of all Librarium archives and the Chapter's full Roll of Honour</li>
+        <li>Assumes sole legislative authority over Librarium policy, honor standards, and narrative canon</li>
+        <li>All decisions are communicated through the Epistolary for chapter-wide implementation</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      Primarch-Progenitor &nbsp;·&nbsp; Ad tuam gloriam et gloriam Illius in Terra &nbsp;·&nbsp; VII Legion Imperial Fists
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function setView(mode) {
+    const body = document.body;
+    const btnChanges = document.getElementById('btn-changes');
+    const btnClean = document.getElementById('btn-clean');
+    const legend = document.getElementById('legend');
+
+    if (mode === 'clean') {
+      body.classList.add('clean-view');
+      btnClean.classList.add('active');
+      btnChanges.classList.remove('active');
+      legend.classList.add('hidden');
+    } else {
+      body.classList.remove('clean-view');
+      btnChanges.classList.add('active');
+      btnClean.classList.remove('active');
+      legend.classList.remove('hidden');
+    }
+  }
+</script>
+
+</body>
+</html>
