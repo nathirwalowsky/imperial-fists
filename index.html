@@ -25,44 +25,48 @@
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 <style>
   /* ------------------------------------------------------------
      TOKENS — change these to re-colour the whole codex
      ------------------------------------------------------------ */
   :root {
     /* Stone & basalt base */
-    --basalt-950: #0c0e10;
-    --basalt-900: #111417;
-    --basalt-800: #171b1f;
-    --basalt-700: #1f2429;
-    --slate-600: #2a3036;
-    --slate-500: #3a4249;
-    --stone-400: #8b9399;
-    --stone-300: #a9afb3;
-    --stone-200: #cfd2ce;
-    --bone-100: #e9e4d8;
+    --basalt-950: #070707;
+    --basalt-900: #0c0b0b;
+    --basalt-800: #131212;
+    --basalt-700: #1b1918;
+    --slate-600: #2a2725;
+    --slate-500: #3b3734;
+    --stone-400: #918a80;
+    --stone-300: #aca497;
+    --stone-200: #cfc6b5;
+    --bone-100: #e6dcc6;
 
     /* Heraldry (chapter colours undecided: edit freely) */
-    --heraldry-primary: #d6a531;   /* yellow-ochre, Imperial Fists heritage */
-    --heraldry-secondary: #3a4249; /* weathered stone */
-    --heraldry-trim: #e9e4d8;
+    --heraldry-primary: #c49a3a;   /* tarnished yellow-ochre, Imperial Fists heritage */
+    --heraldry-secondary: #3b3734; /* weathered stone */
+    --heraldry-trim: #e6dcc6;
 
     /* Accents */
     --accent: var(--heraldry-primary);
-    --accent-bright: #f0c85e;
-    --accent-dim: #8a6a1e;
-    --accent-soft: rgba(214, 165, 49, 0.14);
-    --tech: #6cc8de;               /* blueprint cyan: technical diagrams only */
-    --tech-soft: rgba(108, 200, 222, 0.12);
-    --tech-line: rgba(108, 200, 222, 0.35);
-    --magma: #d8643c;
-    --water: #3d86a8;
-    --redact: #050607;
+    --accent-bright: #e2bb5c;
+    --accent-dim: #6f5420;
+    --accent-soft: rgba(196, 154, 58, 0.12);
+    --tech: #63afc2;               /* blueprint cyan: technical diagrams only */
+    --tech-soft: rgba(99, 175, 194, 0.09);
+    --tech-line: rgba(99, 175, 194, 0.28);
+    --magma: #c9522c;
+    --water: #2f6f8c;
+    --redact: #020202;
+    --blood: #7d1515;              /* gothic red: seals, illumination, warnings */
+    --blood-deep: #3a0808;
+    --blood-text: #e0695a;
+    --parchment: #d6c69c;
 
     /* Text */
     --text: var(--bone-100);
-    --text-muted: #b9bcb7;
+    --text-muted: #bdb5a6;
     --text-faint: var(--stone-400);
 
     /* Type */
@@ -70,6 +74,7 @@
     --font-body: 'EB Garamond', 'Garamond', Georgia, serif;
     --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
     --font-black: 'UnifrakturMaguntia', 'Cinzel', serif; /* use sparingly */
+    --font-title: 'Cinzel Decorative', 'Cinzel', serif;
 
     /* Layout */
     --toc-width: 260px;
@@ -87,10 +92,11 @@
     margin: 0;
     background-color: var(--basalt-900);
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'%3E%3Cdefs%3E%3Cpath id='c' d='M0-100 C70-105 120-50 110 10 C100 80 30 110 -30 90 C-90 70 -110 0 -80 -50 C-60 -85 -30 -98 0-100Z'/%3E%3C/defs%3E%3Cg fill='none' stroke='%23a9afb3' stroke-opacity='0.07' stroke-width='1'%3E%3Cg transform='translate(190 210)'%3E%3Cuse href='%23c' transform='scale(.3)' vector-effect='non-scaling-stroke'/%3E%3Cuse href='%23c' transform='scale(.6)'/%3E%3Cuse href='%23c' transform='scale(.9)'/%3E%3Cuse href='%23c' transform='scale(1.2)'/%3E%3Cuse href='%23c' transform='scale(1.5)'/%3E%3Cuse href='%23c' transform='scale(1.85)'/%3E%3C/g%3E%3Cg transform='translate(470 470) rotate(140)'%3E%3Cuse href='%23c' transform='scale(.35)'/%3E%3Cuse href='%23c' transform='scale(.7)'/%3E%3Cuse href='%23c' transform='scale(1.05)'/%3E%3Cuse href='%23c' transform='scale(1.4)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-      linear-gradient(rgba(108,200,222,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(108,200,222,0.035) 1px, transparent 1px);
-    background-size: 640px 640px, 32px 32px, 32px 32px;
+      radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(0,0,0,0.6) 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'%3E%3Cdefs%3E%3Cpath id='c' d='M0-100 C70-105 120-50 110 10 C100 80 30 110 -30 90 C-90 70 -110 0 -80 -50 C-60 -85 -30 -98 0-100Z'/%3E%3C/defs%3E%3Cg fill='none' stroke='%23aca497' stroke-opacity='0.06' stroke-width='1'%3E%3Cg transform='translate(190 210)'%3E%3Cuse href='%23c' transform='scale(.3)' vector-effect='non-scaling-stroke'/%3E%3Cuse href='%23c' transform='scale(.6)'/%3E%3Cuse href='%23c' transform='scale(.9)'/%3E%3Cuse href='%23c' transform='scale(1.2)'/%3E%3Cuse href='%23c' transform='scale(1.5)'/%3E%3Cuse href='%23c' transform='scale(1.85)'/%3E%3C/g%3E%3Cg transform='translate(470 470) rotate(140)'%3E%3Cuse href='%23c' transform='scale(.35)'/%3E%3Cuse href='%23c' transform='scale(.7)'/%3E%3Cuse href='%23c' transform='scale(1.05)'/%3E%3Cuse href='%23c' transform='scale(1.4)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+      linear-gradient(rgba(99,175,194,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,175,194,0.022) 1px, transparent 1px);
+    background-size: 100% 100%, 640px 640px, 32px 32px, 32px 32px;
     background-attachment: fixed;
     color: var(--text);
     font-family: var(--font-body);
@@ -99,13 +105,18 @@
     overflow-x: hidden;
   }
   img, svg { max-width: 100%; }
+  /* film grain over everything */
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: 0.07; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
   a { color: var(--accent-bright); text-underline-offset: 3px; }
   a:hover { color: var(--bone-100); }
   :focus-visible { outline: 2px solid var(--tech); outline-offset: 3px; border-radius: 2px; }
   p { margin: 0 0 1em; }
   em { color: var(--bone-100); }
   strong { color: var(--bone-100); font-weight: 600; }
-  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.04em; line-height: 1.2; margin: 0; }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.04em; line-height: 1.2; margin: 0; text-shadow: 0 2px 0 #000; }
   .mono { font-family: var(--font-mono); }
   .visually-hidden {
     position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -132,22 +143,53 @@
     text-align: center;
     padding: clamp(32px, 7vh, 90px) var(--gutter) 0;
     overflow: hidden;
-    background: radial-gradient(ellipse at 50% 20%, rgba(214,165,49,0.08), transparent 60%),
+    background: radial-gradient(ellipse at 50% 12%, rgba(196,154,58,0.10), transparent 40%),
+                radial-gradient(ellipse at 50% 100%, rgba(125,21,21,0.45), transparent 65%),
                 linear-gradient(180deg, var(--basalt-950) 0%, transparent 70%);
     border-bottom: 1px solid var(--slate-600);
   }
-  .hero__sigil { width: 84px; height: 84px; margin-bottom: 18px; color: var(--accent); }
+  .hero::before {
+    content: ''; position: absolute; left: 50%; top: 0; width: 520px; height: 360px; transform: translateX(-50%);
+    background: radial-gradient(ellipse at 50% 30%, rgba(226,187,92,0.13), transparent 65%);
+    animation: candle 5s ease-in-out infinite; pointer-events: none;
+  }
+  @keyframes candle { 0%,100% { opacity: 1; } 22% { opacity: .75; } 40% { opacity: .95; } 61% { opacity: .7; } 80% { opacity: .9; } }
+  .hero > * { position: relative; }
+  .hero__sigil { width: 84px; height: 84px; margin-bottom: 18px; color: var(--accent); filter: drop-shadow(0 0 14px rgba(226,187,92,0.35)); }
+  .hero__orn {
+    display: flex; align-items: center; justify-content: center; gap: 14px; margin: 10px auto 0; width: min(420px, 80%);
+    color: var(--blood-text); font-size: 1.1rem;
+  }
+  .hero__orn::before, .hero__orn::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--accent-dim)); }
+  .hero__orn::after { background: linear-gradient(90deg, var(--accent-dim), transparent); }
+  .embers { position: absolute !important; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+  .embers i {
+    position: absolute; bottom: -8px; left: var(--x); width: 3px; height: 3px; border-radius: 50%;
+    background: #f2a35a; box-shadow: 0 0 6px 1px rgba(255,120,40,0.8); opacity: 0;
+    animation: ember var(--t) linear var(--d) infinite;
+  }
+  @keyframes ember {
+    0% { transform: translate(0, 0); opacity: 0; }
+    10% { opacity: 0.9; }
+    70% { opacity: 0.5; }
+    100% { transform: translate(var(--dx, 30px), -75vh); opacity: 0; }
+  }
   .hero__kicker {
     font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.32em;
-    text-transform: uppercase; color: var(--tech); margin: 0 0 14px;
+    text-transform: uppercase; color: var(--stone-300); margin: 0 0 14px;
   }
+  .hero__kicker b { color: var(--blood-text); font-weight: 500; }
   .hero__title {
-    font-size: clamp(2.5rem, 9vw, 6rem);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    line-height: 1.02;
+    font-family: var(--font-title);
+    font-size: clamp(2.3rem, 8.6vw, 5.8rem);
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    line-height: 1.04;
     color: var(--bone-100);
-    text-shadow: 0 2px 0 var(--basalt-950), 0 0 40px rgba(214,165,49,0.15);
+    background: linear-gradient(180deg, #f1e7cf 0%, #cfc0a0 55%, #8d7b5a 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 3px 0 #000) drop-shadow(0 0 30px rgba(125,21,21,0.45));
+    text-shadow: none;
   }
   .hero__title span { display: block; }
   .hero__subtitle {
@@ -238,7 +280,7 @@
     color: var(--text-faint); letter-spacing: 0.05em;
   }
   .toc a:hover { color: var(--bone-100); background: rgba(255,255,255,0.03); }
-  .toc a[aria-current="true"] { color: var(--accent-bright); border-left-color: var(--accent); background: var(--accent-soft); }
+  .toc a[aria-current="true"] { color: var(--accent-bright); border-left-color: var(--blood-text); background: linear-gradient(90deg, rgba(125,21,21,0.35), transparent); }
   .toc a[aria-current="true"]::before { color: var(--accent); }
   .toc__foot {
     margin-top: 22px; padding-top: 14px; border-top: 1px dashed var(--slate-500);
@@ -259,21 +301,36 @@
     color: var(--tech); margin: 0 0 10px;
   }
   .survey-ref span + span::before { content: '· '; color: var(--text-faint); }
+  .survey-ref::before, .survey-ref::after { content: '+++'; color: var(--blood-text); letter-spacing: 0.1em; }
   .stratum h2 {
     font-size: clamp(1.7rem, 4.6vw, 2.6rem); color: var(--bone-100);
     display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
   }
-  .stratum h2 .num { font-size: 0.55em; color: var(--accent); font-family: var(--font-display); letter-spacing: 0.1em; }
+  .stratum h2 .num { font-size: 0.8em; color: var(--accent); font-family: var(--font-black); font-weight: 400; letter-spacing: 0.02em; }
+  .stratum h2::after {
+    content: ''; flex-basis: 100%; height: 1px; margin-top: 4px;
+    background: linear-gradient(90deg, var(--accent-dim), rgba(125,21,21,0.6) 40%, transparent);
+  }
   .stratum__intro { font-size: 1.28rem; color: var(--text-muted); margin-top: 14px; max-width: 46em; }
   .stratum h3 { font-size: 1.15rem; color: var(--accent-bright); margin: 0 0 10px; letter-spacing: 0.06em; }
 
+  /* illuminated initial */
+  .drop { display: flow-root; }
   .drop::first-letter {
-    font-family: var(--font-black); float: left; font-size: 3.6em; line-height: 0.82;
-    padding: 6px 10px 0 0; color: var(--accent);
+    font-family: var(--font-black); float: left; font-size: 3.3em; line-height: 0.9;
+    padding: 10px 12px 6px; margin: 6px 14px 0 0; color: var(--accent-bright);
+    background: radial-gradient(circle at 40% 35%, var(--blood), var(--blood-deep));
+    border: 1px solid var(--accent-dim); box-shadow: inset 0 0 0 3px var(--blood-deep), inset 0 0 0 4px rgba(196,154,58,0.5);
+    text-shadow: 0 2px 0 #000;
   }
 
   /* strata divider */
-  .strata-divider { height: 54px; margin: 28px 0 0; opacity: 0.95; }
+  .strata-divider { position: relative; height: 54px; margin: 28px 0 0; opacity: 0.95; }
+  .strata-divider::after {
+    content: ''; position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; transform: translate(-50%, -50%);
+    border-radius: 50%; border: 1px solid var(--accent-dim); box-shadow: 0 0 0 4px var(--basalt-950), 0 0 18px rgba(125,21,21,0.6);
+    background: var(--basalt-950) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cpath fill='%23cfc6b5' d='M20 2C9 2 3 10 3 19c0 6 3 10 6 12v6c0 2 1 3 3 3h2v-4h3v4h6v-4h3v4h2c2 0 3-1 3-3v-6c3-2 6-6 6-12C37 10 31 2 20 2z'/%3E%3Cpath fill='%23070707' d='M8 19c0-3 3-5 6-5s5 2 5 5-3 6-6 6-5-3-5-6zm13 0c0-3 2-5 5-5s6 2 6 5-2 6-5 6-6-3-6-6zM20 27l-3 5h6z'/%3E%3C/svg%3E") center 52% / 24px no-repeat;
+  }
   .strata-divider svg { display: block; width: 100%; height: 100%; }
 
   /* margin survey annotation */
@@ -288,8 +345,9 @@
   .entries { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); margin: 20px 0; }
   .entry {
     position: relative; padding: 20px 20px 18px;
-    background: linear-gradient(180deg, rgba(31,36,41,0.92), rgba(23,27,31,0.92));
+    background: linear-gradient(180deg, rgba(27,25,24,0.94), rgba(14,13,13,0.96));
     border: 1px solid var(--slate-600); border-radius: var(--radius);
+    box-shadow: inset 0 0 0 5px rgba(0,0,0,0.3), inset 0 0 0 6px rgba(196,154,58,0.09), 0 8px 24px rgba(0,0,0,0.45);
   }
   .entry::before {
     content: ''; position: absolute; left: 0; top: 0; width: 34px; height: 2px; background: var(--accent);
@@ -314,7 +372,7 @@
   /* data panel */
   .dataplate {
     display: grid; grid-template-columns: max-content 1fr; gap: 0; margin: 24px 0;
-    border: 1px solid var(--tech-line); background: rgba(12,14,16,0.6);
+    border: 1px solid var(--tech-line); background: rgba(9,8,8,0.6);
     font-size: 1.05rem;
   }
   .dataplate dt, .dataplate dd { margin: 0; padding: 10px 14px; border-bottom: 1px solid rgba(108,200,222,0.15); }
@@ -330,33 +388,57 @@
 
   /* carved inscription pull quote */
   .inscription {
-    position: relative; margin: 40px 0; padding: 34px clamp(18px, 5vw, 48px);
+    position: relative; margin: 40px 0; padding: 52px clamp(18px, 5vw, 48px) 34px;
     text-align: center;
     background:
       radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.05), transparent 60%),
       repeating-linear-gradient(176deg, rgba(255,255,255,0.018) 0 2px, transparent 2px 7px),
-      linear-gradient(180deg, #2f353b, #23282d);
-    border: 1px solid #4a535b;
+      radial-gradient(ellipse at 50% 0%, rgba(125,21,21,0.25), transparent 70%),
+      linear-gradient(180deg, #24211f, #141211);
+    border: 1px solid #4a4440;
     box-shadow: inset 0 2px 0 rgba(255,255,255,0.06), inset 0 -3px 0 rgba(0,0,0,0.45), 0 10px 30px rgba(0,0,0,0.35);
-    clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
+    clip-path: polygon(0 28px, 50% 0, 100% 28px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
   }
   .inscription p {
     font-family: var(--font-display); font-weight: 600; font-size: clamp(1.15rem, 3.4vw, 1.65rem);
     letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.45; margin: 0;
-    color: #d5d3cb;
-    text-shadow: 0 -1px 0 rgba(0,0,0,0.85), 0 1px 0 rgba(255,255,255,0.12);
+    color: #d4b871;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.9), 0 1px 0 rgba(255,230,160,0.14), 0 0 18px rgba(196,154,58,0.18);
   }
   .inscription footer {
     margin-top: 14px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
   }
   .inscription::before, .inscription::after {
-    content: '✠'; position: absolute; top: 50%; transform: translateY(-50%); color: var(--accent-dim); font-size: 1.1rem;
+    content: '✠'; position: absolute; top: 50%; transform: translateY(-50%); color: var(--blood-text); font-size: 1.1rem;
   }
   .inscription::before { left: 14px; }
   .inscription::after { right: 14px; }
 
+  /* purity seal (decorative) */
+  .seal { position: absolute; z-index: 4; display: flex; flex-direction: column; align-items: center; pointer-events: none; transform-origin: top center; }
+  .seal--tl { top: -22px; left: 18px; transform: rotate(-6deg); }
+  .seal--tr { top: -22px; right: 18px; transform: rotate(5deg); }
+  .seal__wax {
+    position: relative; z-index: 2; width: 58px; height: 58px; border-radius: 47% 53% 50% 50% / 52% 48% 52% 48%;
+    display: grid; place-items: center; color: #2c0505;
+    background: radial-gradient(circle at 36% 30%, #c23a2c, #7d1515 55%, #3a0808);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.7), inset 0 -3px 6px rgba(0,0,0,0.45), inset 0 2px 3px rgba(255,140,120,0.25);
+  }
+  .seal__wax::before { content: ''; position: absolute; inset: 6px; border-radius: 50%; border: 1.5px solid rgba(40,4,4,0.6); }
+  .seal__wax svg { width: 34px; height: 34px; opacity: 0.8; }
+  .seal__ribbons { display: flex; gap: 4px; margin-top: -12px; }
+  .seal__ribbons span {
+    writing-mode: vertical-rl; padding: 16px 3px 14px; min-height: 70px;
+    font-family: var(--font-black); font-size: 12px; line-height: 1; color: #2a1c0e; letter-spacing: 0.02em;
+    background: linear-gradient(90deg, #b8a679, var(--parchment) 45%, #b5a274);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 93%, 0 100%);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+  }
+  .seal__ribbons span:nth-child(1) { transform: rotate(5deg); }
+  .seal__ribbons span:nth-child(2) { transform: rotate(-4deg); margin-top: 4px; }
+
   /* figures */
-  figure { margin: 32px 0; }
+  figure { margin: 32px 0; position: relative; }
   .figure-frame {
     position: relative; padding: clamp(14px, 3vw, 28px);
     border: 1px solid var(--tech-line);
@@ -432,7 +514,7 @@
   .hooks { counter-reset: hook; list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 12px; }
   .hooks li {
     counter-increment: hook; position: relative; padding: 12px 14px 12px 56px;
-    border: 1px dashed var(--slate-500); background: rgba(12,14,16,0.5);
+    border: 1px dashed var(--slate-500); background: rgba(9,8,8,0.5);
   }
   .hooks li::before {
     content: 'HOOK ' counter(hook, decimal-leading-zero); position: absolute; left: 12px; top: 15px;
@@ -441,7 +523,7 @@
 
   /* dispute: castle vs home */
   .dispute { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: stretch; margin: 24px 0; }
-  .dispute__side { padding: 18px; border: 1px solid var(--slate-600); background: rgba(23,27,31,0.9); }
+  .dispute__side { padding: 18px; border: 1px solid var(--slate-600); background: rgba(19,18,18,0.92); }
   .dispute__side h4 { font-size: 0.95rem; color: var(--accent-bright); margin-bottom: 8px; letter-spacing: 0.08em; }
   .dispute__side--home h4 { color: var(--tech); }
   .dispute__side p { margin: 0; font-size: 1.04rem; color: var(--text-muted); }
@@ -471,7 +553,7 @@
   .org-node__name { font-family: var(--font-display); font-size: 0.95rem; letter-spacing: 0.06em; color: var(--bone-100); display: block; margin-top: 6px; }
   .org-node__codex { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); display: block; margin-top: 6px; }
   .org-node svg { width: 40px; height: 28px; display: block; margin: 8px auto 0; color: var(--tech); }
-  .org-node--command { border-color: var(--accent); background: linear-gradient(180deg, #2a2618, var(--basalt-800)); width: min(100%, 340px); }
+  .org-node--command { border-color: var(--accent); background: linear-gradient(180deg, #3a0f0c, var(--basalt-800)); width: min(100%, 340px); }
   .org-node--command .org-node__name { font-size: 1.1rem; }
   .org-node--vet { width: min(100%, 300px); border-color: var(--accent-dim); }
   .org-node--reserve { width: min(100%, 560px); border-style: double; border-width: 3px; }
@@ -533,7 +615,7 @@
      ------------------------------------------------------------ */
   .tension-svg { display: block; width: 100%; max-width: 640px; height: auto; margin: 0 auto; }
   .t-node { fill: var(--basalt-800); stroke: var(--slate-500); stroke-width: 2; }
-  .t-node--chapter { stroke: var(--accent); stroke-width: 3; fill: #221f16; }
+  .t-node--chapter { stroke: var(--accent); stroke-width: 3; fill: #2a0d0b; }
   .t-name { font-family: var(--font-display); font-size: 19px; font-weight: 600; fill: var(--bone-100); letter-spacing: 0.04em; text-anchor: middle; }
   .t-sub { font-family: var(--font-mono); font-size: 13px; fill: var(--text-faint); text-anchor: middle; letter-spacing: 0.06em; }
   .t-link { fill: none; stroke-width: 2.5; }
@@ -558,7 +640,7 @@
     position: absolute; left: 16px; top: 18px; width: 32px; height: 32px; border-radius: 50%;
     border: 2px solid var(--accent); display: grid; place-items: center; font-family: var(--font-mono); color: var(--accent-bright); font-size: 0.9rem;
   }
-  .tension-list .entry--main { border-color: var(--accent-dim); background: linear-gradient(180deg, rgba(42,38,24,0.9), rgba(23,27,31,0.92)); }
+  .tension-list .entry--main { border-color: var(--accent-dim); background: linear-gradient(180deg, rgba(58,8,8,0.55), rgba(14,13,13,0.96)); }
 
   /* ------------------------------------------------------------
      STRENGTHS / FLAWS LEDGER
@@ -569,7 +651,7 @@
   .ledger h3 { display: flex; align-items: center; gap: 10px; }
   .ledger h3 svg { width: 26px; height: 26px; flex: none; }
   .ledger__strengths h3 { color: var(--accent-bright); }
-  .ledger__flaws h3 { color: #f08b64; }
+  .ledger__flaws h3 { color: var(--blood-text); }
   .ledger ul { list-style: none; padding: 0; margin: 0; }
   .ledger li { padding: 10px 0 10px 22px; position: relative; border-top: 1px dashed var(--slate-600); color: var(--text-muted); }
   .ledger li:first-child { border-top: 0; }
@@ -581,13 +663,17 @@
      REDACTED / UNRECORDED
      ------------------------------------------------------------ */
   .unrecorded {
-    background: repeating-linear-gradient(-45deg, rgba(216,100,60,0.05) 0 14px, transparent 14px 28px);
-    border: 1px solid rgba(216,100,60,0.35); padding: clamp(16px, 4vw, 32px); margin-top: 10px;
+    background: repeating-linear-gradient(-45deg, rgba(125,21,21,0.10) 0 14px, transparent 14px 28px);
+    border: 1px solid rgba(160,30,30,0.5); padding: clamp(16px, 4vw, 32px); margin-top: 10px;
   }
-  .unrecorded .entry { background: rgba(12,14,16,0.88); border-style: dashed; }
-  .unrecorded .entry::before { background: var(--magma); }
+  .expunged {
+    margin: 0 0 20px; text-align: center; font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--blood-text);
+  }
+  .unrecorded .entry { background: rgba(7,7,7,0.9); border-style: dashed; border-color: #3e1a18; }
+  .unrecorded .entry::before { background: var(--blood); }
   .entry__status {
-    font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: #f08b64; display: block; margin-bottom: 8px;
+    font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blood-text); display: block; margin-bottom: 8px;
   }
   .bars { display: grid; gap: 7px; margin: 12px 0; }
   .bars span { display: block; height: 0.95em; background: var(--redact); border: 1px solid var(--slate-600); }
@@ -606,7 +692,8 @@
     background: linear-gradient(180deg, transparent, var(--basalt-950));
   }
   .site-footer svg { width: 54px; height: 54px; color: var(--accent); margin-bottom: 10px; }
-  .site-footer .motto { font-family: var(--font-display); letter-spacing: 0.1em; color: var(--stone-200); margin: 0 0 18px; }
+  .site-footer .end { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blood-text); margin: 0 0 14px; }
+  .site-footer .motto { font-family: var(--font-display); letter-spacing: 0.1em; color: #d4b871; margin: 0 0 18px; }
   .site-footer small { display: block; max-width: 640px; margin: 0 auto; font-family: var(--font-mono); font-size: 0.7rem; line-height: 1.7; color: var(--text-faint); }
 
   /* ------------------------------------------------------------
@@ -629,7 +716,7 @@
     .toc {
       position: sticky; top: 0; z-index: 50; max-height: none; overflow: visible;
       padding: 0; border-right: 0; border-bottom: 1px solid var(--slate-600);
-      background: rgba(12,14,16,0.94); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      background: rgba(9,8,8,0.94); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
     }
     .toc__head { display: none; }
     .toc__toggle {
@@ -674,6 +761,10 @@
     .flow__split { gap: 12px; }
     .t-lbl, .t-sub { display: none; }
     .t-name { font-size: 25px; }
+    .seal { transform: scale(0.72) rotate(-6deg); }
+    .seal__ribbons { display: none; }
+    .survey-ref::after { display: none; }
+    .seal--tr { transform: scale(0.72) rotate(5deg); }
     .t-badge text { font-size: 20px; }
     .inscription { padding-left: 38px; padding-right: 38px; }
     .dataplate { grid-template-columns: minmax(0, 1fr); }
@@ -709,6 +800,7 @@
     .js .half-right { transform: translate(10px, -3px); }
     .js .hero__annot-group { opacity: 1; }
     .js .reveal { opacity: 1; transform: none; }
+    .embers { display: none; }
   }
 </style>
 </head>
@@ -821,9 +913,16 @@
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
   <svg class="hero__sigil" role="img" aria-label="Chapter sigil: a mountain split by a fault line"><use href="#sigil"/></svg>
-  <p class="hero__kicker">Chapter Codex · Adeptus Astartes</p>
+  <div class="embers" aria-hidden="true">
+    <i style="--x:8%;--d:0s;--t:11s"></i><i style="--x:17%;--d:3s;--t:9s;--dx:-20px"></i><i style="--x:26%;--d:6s;--t:12s"></i>
+    <i style="--x:38%;--d:1.5s;--t:10s;--dx:40px"></i><i style="--x:47%;--d:7s;--t:13s"></i><i style="--x:55%;--d:4s;--t:9.5s;--dx:-30px"></i>
+    <i style="--x:63%;--d:2s;--t:11.5s"></i><i style="--x:72%;--d:5.5s;--t:10s;--dx:-15px"></i><i style="--x:81%;--d:0.8s;--t:12.5s"></i>
+    <i style="--x:90%;--d:3.6s;--t:10.5s;--dx:-35px"></i><i style="--x:33%;--d:8.5s;--t:14s"></i><i style="--x:68%;--d:9.2s;--t:13s;--dx:25px"></i>
+  </div>
+  <p class="hero__kicker"><b>+++</b> Chapter Codex · Adeptus Astartes <b>+++</b></p>
   <h1 class="hero__title"><span>Mountain</span><span>Breakers</span></h1>
   <p class="hero__subtitle">Fractores Montium <span class="tag">working name</span></p>
+  <p class="hero__orn" aria-hidden="true">✠</p>
   <p class="hero__lede">An Imperial Fists successor chapter of siege engineers who win wars by reshaping the ground they are fought on.</p>
   <ul class="hero__meta">
     <li>Progenitor: <b>Imperial Fists</b></li>
@@ -835,16 +934,20 @@
     <svg viewBox="0 0 1200 440" width="1200" height="440">
       <defs>
         <linearGradient id="g-back" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#3a4249"/><stop offset="1" stop-color="#1f2429"/>
+          <stop offset="0" stop-color="#2a2422"/><stop offset="1" stop-color="#110f0e"/>
         </linearGradient>
         <linearGradient id="g-front" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#4d565e"/><stop offset="0.5" stop-color="#2a3036"/><stop offset="1" stop-color="#111417"/>
+          <stop offset="0" stop-color="#3a3431"/><stop offset="0.5" stop-color="#1c1918"/><stop offset="1" stop-color="#080707"/>
         </linearGradient>
+        <radialGradient id="g-burn" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#9b2a16" stop-opacity="0.55"/><stop offset="0.5" stop-color="#5a1010" stop-opacity="0.25"/><stop offset="1" stop-color="#5a1010" stop-opacity="0"/></radialGradient>
+        <linearGradient id="g-fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c0b0b" stop-opacity="0"/><stop offset="1" stop-color="#0c0b0b" stop-opacity="0.95"/></linearGradient>
         <clipPath id="hero-left"><path d="M-1000 0 H600 L600 70 L584 130 L612 196 L588 262 L620 330 L598 390 L610 440 H-1000 Z"/></clipPath>
         <clipPath id="hero-right"><path d="M600 0 H2200 V440 H610 L598 390 L620 330 L588 262 L612 196 L584 130 L600 70 Z"/></clipPath>
         <path id="front-shape" d="M-1000 440 L-1000 300 L-820 250 L-640 300 L-460 230 L-300 290 L-140 250 L0 330 L120 270 L210 300 L330 190 L420 230 L520 120 L600 70 L690 140 L760 110 L880 220 L960 200 L1080 290 L1200 260 L1340 310 L1500 230 L1680 290 L1860 240 L2200 300 L2200 440 Z"/>
         <clipPath id="hero-mountain"><use href="#front-shape"/></clipPath>
       </defs>
+      <!-- burning horizon -->
+      <ellipse cx="600" cy="250" rx="1100" ry="200" fill="url(#g-burn)"/>
       <!-- back range -->
       <path d="M-1000 440 L-1000 230 L-860 180 L-700 230 L-540 160 L-380 220 L-200 170 L0 250 L90 210 L180 240 L300 140 L390 190 L470 150 L560 200 L660 120 L760 170 L850 130 L960 180 L1060 150 L1200 210 L1360 150 L1540 200 L1720 140 L1900 210 L2200 180 L2200 440 Z" fill="url(#g-back)" opacity="0.55"/>
       <!-- contour lines on back range -->
@@ -873,13 +976,23 @@
           <path d="M380 240 Q500 180 600 210 T800 240" stroke="#5a636b" opacity="0.3"/>
         </g>
       </g></g>
+      <!-- cathedral-fortress spires on the far peak -->
+      <g class="half-right" fill="#060606">
+        <path d="M726 146 L732 128 H800 L808 152 Z"/>
+        <path d="M752 132 V72 L760 28 L768 72 V132 Z"/>
+        <path d="M735 138 V94 L741 66 L747 94 V138 Z"/>
+        <path d="M773 138 V88 L780 58 L787 88 V140 Z"/>
+        <path d="M792 150 V114 L796 98 L800 114 V150 Z"/>
+        <g fill="#e2a24c" opacity="0.85"><rect x="758.5" y="80" width="3" height="10"/><rect x="740" y="102" width="2" height="7"/><rect x="778.5" y="98" width="2.5" height="8"/><rect x="758.5" y="104" width="3" height="8"/></g>
+      </g>
+      <rect x="-1000" y="340" width="3200" height="100" fill="url(#g-fog)"/>
       <!-- fault line -->
       <path class="fault-glow" d="M600 70 L584 130 L612 196 L588 262 L620 330 L598 390 L610 440"/>
       <path class="fault-line" d="M600 70 L584 130 L612 196 L588 262 L620 330 L598 390 L610 440"/>
       <!-- survey annotations -->
       <g class="hero__annot-group">
-        <path class="hero__annot-line" d="M600 70 L600 30 L760 30"/>
-        <text class="hero__annot" x="768" y="34">SURVEY PT. Δ1 · DESIGNATED FOR REMOVAL</text>
+        <path class="hero__annot-line" d="M600 70 L600 30 L450 30"/>
+        <text class="hero__annot" x="442" y="36" text-anchor="end">SURVEY PT. Δ1 · DESIGNATED FOR REMOVAL</text>
         <path class="hero__annot-line" d="M598 262 L420 262 L420 360"/>
         <text class="hero__annot" x="240" y="380">INDUCED FAULT PLANE</text>
         <path class="hero__annot-line" d="M880 220 L960 120 L1060 120"/>
@@ -1076,6 +1189,7 @@
         </header>
 
         <figure class="reveal">
+          <div class="seal seal--tr" aria-hidden="true"><span class="seal__wax"><svg><use href="#sigil"/></svg></span><span class="seal__ribbons"><span>Break · Settle</span><span>Build</span></span></div>
           <div class="figure-frame">
             <ol class="fallow">
               <li>
@@ -1217,6 +1331,7 @@
         </blockquote>
 
         <figure class="reveal">
+          <div class="seal seal--tl" aria-hidden="true"><span class="seal__wax"><svg><use href="#sigil"/></svg></span><span class="seal__ribbons"><span>Fractores</span><span>Montium</span></span></div>
           <div class="figure-frame">
             <div class="org" role="list" aria-label="Company structure">
               <div class="org-row" role="listitem">
@@ -1532,6 +1647,7 @@
         </header>
 
         <div class="unrecorded reveal">
+          <p class="expunged">+++ Records incomplete · Data expunged +++</p>
           <div class="entries">
             <!-- Copy this block to add a new open question -->
             <article class="entry">
@@ -1601,6 +1717,7 @@
 
 <footer class="site-footer">
   <svg aria-hidden="true"><use href="#sigil"/></svg>
+  <p class="end">+++ End of record +++</p>
   <p class="motto">“Dorn built walls on the world; we make the world the wall.”</p>
   <small>Unofficial, fan-made homebrew lore. Warhammer 40,000, the Imperial Fists and related names are trademarks of Games Workshop Ltd; this page is not affiliated with or endorsed by Games Workshop. All symbols and illustrations here are original.</small>
 </footer>
