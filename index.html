@@ -12,8 +12,8 @@
 
   EDITING GUIDE
   - Palette & fonts: change the custom properties in :root below.
-    Chapter colours are undecided; the heraldic accents are the
-    --heraldry-* and --accent variables.
+    Chapter livery lives in the --livery-* variables (bone, copper,
+    yellow, red, maroon); --heraldry-* and --accent map onto them.
   - Each section is a <section class="stratum">. Entries inside are
     <article class="entry"> blocks: copy one to add a new entry.
   - Heroes and campaigns: see the "Unrecorded" section at the end.
@@ -41,32 +41,42 @@
     --stone-400: #918a80;
     --stone-300: #aca497;
     --stone-200: #cfc6b5;
-    --bone-100: #e6dcc6;
+    --bone-100: #e3e0d1;
 
-    /* Heraldry (chapter colours undecided: edit freely) */
-    --heraldry-primary: #c49a3a;   /* tarnished yellow-ochre, Imperial Fists heritage */
-    --heraldry-secondary: #3b3734; /* weathered stone */
-    --heraldry-trim: #e6dcc6;
+    /* Chapter livery (recorded from the Space Marine 2 heraldry) */
+    --livery-bone: #c8cabb;        /* plastron, pauldrons, gauntlets */
+    --livery-bone-shade: #8d9184;
+    --livery-copper: #4e2716;      /* arms, greaves, trim */
+    --livery-copper-light: #9c5632;
+    --livery-yellow: #d8a92b;      /* helm: Imperial Fists heritage */
+    --livery-red: #a8432f;         /* skull markings */
+    --livery-maroon: #7b2c3a;      /* honour cords */
+
+    /* Heraldry */
+    --heraldry-primary: var(--livery-yellow);
+    --heraldry-secondary: var(--livery-copper);
+    --heraldry-trim: var(--livery-bone);
+    --copper: var(--livery-copper-light);
 
     /* Accents */
     --accent: var(--heraldry-primary);
-    --accent-bright: #e2bb5c;
-    --accent-dim: #6f5420;
-    --accent-soft: rgba(196, 154, 58, 0.12);
+    --accent-bright: #ecc65a;
+    --accent-dim: #765818;
+    --accent-soft: rgba(216, 169, 43, 0.12);
     --tech: #63afc2;               /* blueprint cyan: technical diagrams only */
     --tech-soft: rgba(99, 175, 194, 0.09);
     --tech-line: rgba(99, 175, 194, 0.28);
     --magma: #c9522c;
     --water: #2f6f8c;
     --redact: #020202;
-    --blood: #7d1515;              /* gothic red: seals, illumination, warnings */
-    --blood-deep: #3a0808;
-    --blood-text: #e0695a;
+    --blood: #74202f;              /* maroon of the honour cords: seals, illumination, warnings */
+    --blood-deep: #2f0b12;
+    --blood-text: #e07580;
     --parchment: #d6c69c;
 
     /* Text */
     --text: var(--bone-100);
-    --text-muted: #bdb5a6;
+    --text-muted: #bfbbae;
     --text-faint: var(--stone-400);
 
     /* Type */
@@ -160,8 +170,8 @@
     display: flex; align-items: center; justify-content: center; gap: 14px; margin: 10px auto 0; width: min(420px, 80%);
     color: var(--blood-text); font-size: 1.1rem;
   }
-  .hero__orn::before, .hero__orn::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--accent-dim)); }
-  .hero__orn::after { background: linear-gradient(90deg, var(--accent-dim), transparent); }
+  .hero__orn::before, .hero__orn::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--copper)); }
+  .hero__orn::after { background: linear-gradient(90deg, var(--copper), transparent); }
   .embers { position: absolute !important; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
   .embers i {
     position: absolute; bottom: -8px; left: var(--x); width: 3px; height: 3px; border-radius: 50%;
@@ -309,7 +319,7 @@
   .stratum h2 .num { font-size: 0.8em; color: var(--accent); font-family: var(--font-black); font-weight: 400; letter-spacing: 0.02em; }
   .stratum h2::after {
     content: ''; flex-basis: 100%; height: 1px; margin-top: 4px;
-    background: linear-gradient(90deg, var(--accent-dim), rgba(125,21,21,0.6) 40%, transparent);
+    background: linear-gradient(90deg, var(--copper), rgba(116,32,47,0.6) 40%, transparent);
   }
   .stratum__intro { font-size: 1.28rem; color: var(--text-muted); margin-top: 14px; max-width: 46em; }
   .stratum h3 { font-size: 1.15rem; color: var(--accent-bright); margin: 0 0 10px; letter-spacing: 0.06em; }
@@ -350,7 +360,7 @@
     box-shadow: inset 0 0 0 5px rgba(0,0,0,0.3), inset 0 0 0 6px rgba(196,154,58,0.09), 0 8px 24px rgba(0,0,0,0.45);
   }
   .entry::before {
-    content: ''; position: absolute; left: 0; top: 0; width: 34px; height: 2px; background: var(--accent);
+    content: ''; position: absolute; left: 0; top: 0; width: 34px; height: 2px; background: var(--copper);
   }
   .entry p:last-child, .entry ul:last-child { margin-bottom: 0; }
   .entry__icon { width: 44px; height: 44px; margin-bottom: 10px; color: var(--accent); }
@@ -413,6 +423,22 @@
   }
   .inscription::before { left: 14px; }
   .inscription::after { right: 14px; }
+
+  /* livery plate */
+  .livery { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 24px; align-items: center; }
+  .livery svg { display: block; width: 100%; height: auto; }
+  .livery__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .livery__list li { display: grid; grid-template-columns: 38px 1fr; gap: 0 12px; align-items: center; }
+  .livery__sw {
+    grid-row: span 2; width: 38px; height: 38px; border-radius: 50%; background: var(--c);
+    box-shadow: inset 0 -5px 8px rgba(0,0,0,0.45), inset 0 3px 4px rgba(255,255,255,0.25), 0 0 0 1px #000, 0 0 0 3px var(--slate-500);
+  }
+  .livery__list b { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.05em; color: var(--bone-100); font-size: 0.98rem; }
+  .livery__list small { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); }
+  .livery__note { margin: 16px 0 0; padding-top: 12px; border-top: 1px dashed var(--slate-500); font-size: 1rem; color: var(--text-muted); }
+  .liv-lbl { font-family: var(--font-mono); font-size: 15px; fill: var(--tech); letter-spacing: 0.08em; }
+  .liv-sub { font-family: var(--font-mono); font-size: 13px; fill: var(--stone-300); letter-spacing: 0.06em; }
+  .liv-lead { fill: none; stroke: var(--tech); stroke-width: 1; stroke-dasharray: 3 3; }
 
   /* purity seal (decorative) */
   .seal { position: absolute; z-index: 4; display: flex; flex-direction: column; align-items: center; pointer-events: none; transform-origin: top center; }
@@ -755,7 +781,7 @@
     .timeline-note { margin: 6px 0 0; }
     .org-row--battle { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .org-row--battle::before { left: 25%; right: 25%; }
-    .versus, .ledger, .dispute { grid-template-columns: minmax(0, 1fr); }
+    .versus, .ledger, .dispute, .livery { grid-template-columns: minmax(0, 1fr); }
     .ledger > div + div { border-left: 0; border-top: 1px solid var(--slate-500); }
     .dispute__vs { justify-self: center; }
     .flow__split { gap: 12px; }
@@ -818,6 +844,12 @@
       <path d="M50 22 L47 38 L53 50 L46 62 L52 78 L18 78 Z" fill="currentColor"/>
       <path d="M54 20 L51 38 L57 50 L50 62 L56 78 L84 78 Z" fill="currentColor" opacity="0.62"/>
       <path d="M22 70 H46 M24 63 H45 M70 66 H80 M66 58 H76" stroke="var(--basalt-900)" stroke-width="2"/>
+    </symbol>
+
+    <!-- Skull marking -->
+    <symbol id="skull" viewBox="0 0 40 44">
+      <path fill="currentColor" d="M20 2C9 2 3 10 3 19c0 6 3 10 6 12v6c0 2 1 3 3 3h2v-4h3v4h6v-4h3v4h2c2 0 3-1 3-3v-6c3-2 6-6 6-12C37 10 31 2 20 2z"/>
+      <path fill="#0c0b0b" d="M8 19c0-3 3-5 6-5s5 2 5 5-3 6-6 6-5-3-5-6zm13 0c0-3 2-5 5-5s6 2 6 5-2 6-5 6-6-3-6-6zM20 27l-3 5h6z"/>
     </symbol>
 
     <!-- Fist breaking stone -->
@@ -896,7 +928,7 @@
       <path d="M0 6 Q250 1 500 6 T1000 6 V60 H0Z" style="fill:var(--slate-500)"/>
       <path d="M0 15 Q250 10 500 15 T1000 15 V60 H0Z" style="fill:var(--slate-600)"/>
       <path d="M0 25 Q250 30 500 25 T1000 25 V60 H0Z" style="fill:#4b5157"/>
-      <path d="M0 31 Q250 36 500 31 T1000 31 V60 H0Z" style="fill:var(--accent-dim)"/>
+      <path d="M0 31 Q250 36 500 31 T1000 31 V60 H0Z" style="fill:var(--livery-copper)"/>
       <path d="M0 34 Q250 39 500 34 T1000 34 V60 H0Z" style="fill:var(--basalt-700)"/>
       <path d="M0 45 Q250 41 500 45 T1000 45 V60 H0Z" style="fill:#2d3338"/>
       <path d="M0 53 Q250 50 500 53 T1000 53 V60 H0Z" style="fill:var(--basalt-950)"/>
@@ -1052,8 +1084,101 @@
           <dt>Progenitor</dt><dd>Imperial Fists</dd>
           <dt>Founding</dt><dd>Second Founding</dd>
           <dt>Specialty</dt><dd>Siege engineering; terrain manipulation at planetary scale</dd>
-          <dt>Colours</dt><dd><span class="redacted-inline">Undecided</span></dd>
+          <dt>Colours</dt><dd>Weathered bone and dark copper, Imperial Fists yellow helm (see livery below)</dd>
         </dl>
+
+        <figure class="reveal" aria-labelledby="livery-cap">
+          <div class="figure-frame">
+            <div class="livery">
+              <svg viewBox="0 0 560 440" role="img" aria-labelledby="livery-t">
+                <title id="livery-t">Schematic of the chapter livery: yellow helm, bone plastron and pauldrons with red skull markings and a maroon honour cord, dark copper arms and greaves.</title>
+                <defs>
+                  <linearGradient id="lv-bone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--livery-bone)"/><stop offset="1" style="stop-color:var(--livery-bone-shade)"/></linearGradient>
+                  <linearGradient id="lv-copper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--livery-copper-light)"/><stop offset="1" style="stop-color:var(--livery-copper)"/></linearGradient>
+                  <linearGradient id="lv-yellow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c94e"/><stop offset="1" style="stop-color:var(--livery-yellow)"/></linearGradient>
+                  <pattern id="lv-mail" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#2b2826"/><circle cx="3" cy="3" r="1.8" fill="none" stroke="#77736b" stroke-width="1"/></pattern>
+                </defs>
+                <g stroke="#0a0909" stroke-width="2" stroke-linejoin="round">
+                  <!-- power pack -->
+                  <path d="M156 46 H304 V124 H156 Z" fill="#2a2725"/>
+                  <!-- legs -->
+                  <path d="M172 306 H222 L218 430 H176 Z" fill="url(#lv-copper)"/>
+                  <path d="M238 306 H288 L284 430 H242 Z" fill="url(#lv-copper)"/>
+                  <path d="M178 360 H216 V392 H178 Z M244 360 H282 V392 H244 Z" fill="#3a2015"/>
+                  <!-- arms -->
+                  <path d="M70 205 L130 212 L126 300 L76 296 Z" fill="url(#lv-copper)"/>
+                  <path d="M390 205 L330 212 L334 300 L384 296 Z" fill="url(#lv-copper)"/>
+                  <!-- gauntlets -->
+                  <path d="M74 296 L128 300 L124 342 Q100 352 78 340 Z" fill="url(#lv-bone)"/>
+                  <path d="M386 296 L332 300 L336 342 Q360 352 382 340 Z" fill="url(#lv-copper)"/>
+                  <!-- abdomen -->
+                  <path d="M176 246 H284 L280 292 H180 Z" fill="#242120"/>
+                  <!-- plastron -->
+                  <path d="M168 118 H292 L304 182 L292 250 Q230 272 168 250 L156 182 Z" fill="url(#lv-bone)"/>
+                  <!-- belt + mail tabard -->
+                  <path d="M214 304 H246 V392 H214 Z" fill="url(#lv-mail)"/>
+                  <path d="M168 288 H292 L294 308 H166 Z" fill="#4a2a1a"/>
+                  <rect x="212" y="282" width="36" height="30" rx="3" fill="url(#lv-bone)"/>
+                  <circle cx="230" cy="297" r="8" fill="none" stroke="#5d6157" stroke-width="2"/>
+                  <!-- gorget -->
+                  <path d="M180 124 Q180 64 230 60 Q280 64 280 124 Z" fill="url(#lv-bone)"/>
+                  <!-- helm -->
+                  <path d="M205 92 Q205 54 230 52 Q255 54 255 92 L252 114 Q230 126 208 114 Z" fill="url(#lv-yellow)"/>
+                  <path d="M211 82 L226 87 L224 94 L212 91 Z M249 82 L234 87 L236 94 L248 91 Z" fill="#1c1a19"/>
+                  <path d="M222 104 H238 M222 109 H238" stroke="#5a4310" stroke-width="2"/>
+                  <!-- pauldrons -->
+                  <path d="M58 152 Q58 88 130 86 Q178 86 186 130 L186 212 Q122 224 60 208 Z" fill="url(#lv-bone)"/>
+                  <path d="M402 152 Q402 88 330 86 Q282 86 274 130 L274 212 Q338 224 400 208 Z" fill="url(#lv-bone)"/>
+                  <path d="M60 208 Q122 224 186 212 M400 208 Q338 224 274 212" fill="none" style="stroke:var(--livery-copper-light)" stroke-width="6"/>
+                </g>
+                <ellipse cx="108" cy="116" rx="34" ry="14" fill="#fff" opacity="0.16"/>
+                <ellipse cx="352" cy="116" rx="34" ry="14" fill="#fff" opacity="0.16"/>
+                <ellipse cx="230" cy="70" rx="12" ry="7" fill="#fff" opacity="0.3"/>
+                <!-- rivets on the right pauldron -->
+                <g fill="#9a9e90" stroke="#4b4e46" stroke-width="1.5">
+                  <circle cx="300" cy="104" r="6"/><circle cx="330" cy="98" r="6"/><circle cx="360" cy="104" r="6"/><circle cx="382" cy="126" r="6"/><circle cx="390" cy="156" r="6"/><circle cx="388" cy="186" r="6"/>
+                </g>
+                <!-- honour cord on the left pauldron -->
+                <path d="M151 118 Q132 168 82 192 M151 118 Q122 184 92 208" fill="none" style="stroke:var(--livery-maroon)" stroke-width="5" stroke-linecap="round" stroke-dasharray="7 2"/>
+                <path d="M151 120 L156 176" style="stroke:var(--livery-maroon)" stroke-width="4"/>
+                <path d="M152 176 L150 204 M156 176 L157 206 M160 176 L163 203" style="stroke:var(--livery-maroon)" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="151" cy="114" r="9" style="fill:var(--livery-yellow)" stroke="#5a4310" stroke-width="2"/>
+                <!-- skull markings -->
+                <g style="color:var(--livery-red)">
+                  <use href="#skull" x="186" y="140" width="22" height="24"/>
+                  <use href="#skull" x="218" y="134" width="24" height="27"/>
+                  <use href="#skull" x="252" y="140" width="22" height="24"/>
+                  <use href="#skull" x="84" y="232" width="20" height="22"/>
+                </g>
+                <!-- survey annotations -->
+                <path class="liv-lead" d="M252 74 L300 40 H420"/>
+                <text class="liv-lbl" x="424" y="38">HELM</text>
+                <text class="liv-sub" x="424" y="58">IMPERIAL YELLOW</text>
+                <path class="liv-lead" d="M380 140 H420"/>
+                <text class="liv-lbl" x="424" y="136">PAULDRONS</text>
+                <text class="liv-sub" x="424" y="156">WEATHERED BONE</text>
+                <path class="liv-lead" d="M360 250 L420 236"/>
+                <text class="liv-lbl" x="424" y="232">ARMS · LEGS</text>
+                <text class="liv-sub" x="424" y="252">DARK COPPER</text>
+                <path class="liv-lead" d="M286 400 L330 340 H420"/>
+                <text class="liv-lbl" x="424" y="336">MAIL TABARD</text>
+                <text class="liv-sub" x="424" y="356">COPPER BELT</text>
+              </svg>
+              <div>
+                <h3 id="livery-h">Chapter livery</h3>
+                <ul class="livery__list">
+                  <li><span class="livery__sw" style="--c:var(--livery-bone)"></span><b>Weathered bone</b><small>Plastron · pauldrons · gauntlet</small></li>
+                  <li><span class="livery__sw" style="--c:var(--livery-copper-light)"></span><b>Dark copper</b><small>Arms · greaves · trim</small></li>
+                  <li><span class="livery__sw" style="--c:var(--livery-yellow)"></span><b>Imperial Fists yellow</b><small>Helm</small></li>
+                  <li><span class="livery__sw" style="--c:var(--livery-red)"></span><b>Rust red</b><small>Skull markings</small></li>
+                  <li><span class="livery__sw" style="--c:var(--livery-maroon)"></span><b>Maroon</b><small>Honour cords</small></li>
+                </ul>
+                <p class="livery__note"><strong>Techmarines</strong> wear the same bone and copper, with a red Mechanicus pauldron.</p>
+              </div>
+            </div>
+          </div>
+          <figcaption id="livery-cap"><b>Fig. I-1</b> · Chapter livery, as recorded in the Space Marine 2 heraldry editor. Schematic, not to scale.</figcaption>
+        </figure>
         <div class="strata-divider" aria-hidden="true"><svg><use href="#strata"/></svg></div>
       </section>
 
@@ -1667,9 +1792,9 @@
               <p class="visually-hidden">Names not yet recorded.</p>
             </article>
             <article class="entry">
-              <span class="entry__status">Status · undecided</span>
-              <h3>Chapter colours &amp; heraldry</h3>
-              <p class="entry__options">Placeholder accents in use. Set <code class="mono">--heraldry-*</code> once decided.</p>
+              <span class="entry__status">Status · partly recorded</span>
+              <h3>Chapter heraldry</h3>
+              <p class="entry__options">Colours are recorded (see Fig. I-1). The chapter symbol is still undecided; the sigil on this page is a placeholder.</p>
             </article>
             <article class="entry">
               <span class="entry__status">Status · unrecorded</span>
