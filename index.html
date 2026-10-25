@@ -56,22 +56,23 @@
     --heraldry-primary: var(--livery-yellow);
     --heraldry-secondary: var(--livery-copper);
     --heraldry-trim: var(--livery-bone);
-    --copper: var(--livery-copper-light);
+    --copper: #8f7230;             /* UI rule colour: muted gold (livery copper stays in the swatches) */
 
     /* Accents */
     --accent: var(--heraldry-primary);
     --accent-bright: #ecc65a;
     --accent-dim: #765818;
     --accent-soft: rgba(216, 169, 43, 0.12);
-    --tech: #63afc2;               /* blueprint cyan: technical diagrams only */
-    --tech-soft: rgba(99, 175, 194, 0.09);
-    --tech-line: rgba(99, 175, 194, 0.28);
-    --magma: #c9522c;
-    --water: #2f6f8c;
+    /* UI palette is deliberately small: neutrals + gold + one red */
+    --tech: #a59e90;               /* technical labels and diagram lines (neutral stone) */
+    --tech-soft: rgba(255, 255, 255, 0.03);
+    --tech-line: rgba(255, 255, 255, 0.13);
+    --magma: #a3392e;              /* the one red, for fills */
+    --water: #4c585e;
     --redact: #020202;
     --blood: #74202f;              /* maroon of the honour cords: seals, illumination, warnings */
     --blood-deep: #2f0b12;
-    --blood-text: #e07580;
+    --blood-text: #cf5f55;         /* the one red, for text */
     --parchment: #d6c69c;
 
     /* Text */
@@ -104,8 +105,8 @@
     background-image:
       radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(0,0,0,0.6) 100%),
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'%3E%3Cdefs%3E%3Cpath id='c' d='M0-100 C70-105 120-50 110 10 C100 80 30 110 -30 90 C-90 70 -110 0 -80 -50 C-60 -85 -30 -98 0-100Z'/%3E%3C/defs%3E%3Cg fill='none' stroke='%23aca497' stroke-opacity='0.06' stroke-width='1'%3E%3Cg transform='translate(190 210)'%3E%3Cuse href='%23c' transform='scale(.3)' vector-effect='non-scaling-stroke'/%3E%3Cuse href='%23c' transform='scale(.6)'/%3E%3Cuse href='%23c' transform='scale(.9)'/%3E%3Cuse href='%23c' transform='scale(1.2)'/%3E%3Cuse href='%23c' transform='scale(1.5)'/%3E%3Cuse href='%23c' transform='scale(1.85)'/%3E%3C/g%3E%3Cg transform='translate(470 470) rotate(140)'%3E%3Cuse href='%23c' transform='scale(.35)'/%3E%3Cuse href='%23c' transform='scale(.7)'/%3E%3Cuse href='%23c' transform='scale(1.05)'/%3E%3Cuse href='%23c' transform='scale(1.4)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-      linear-gradient(rgba(99,175,194,0.022) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(99,175,194,0.022) 1px, transparent 1px);
+      linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px);
     background-size: 100% 100%, 640px 640px, 32px 32px, 32px 32px;
     background-attachment: fixed;
     color: var(--text);
@@ -328,7 +329,7 @@
   }
   .tag--ochre { color: var(--accent-bright); }
   .tag--cyan { color: var(--tech); }
-  .tag--magma { color: #f08b64; }
+  .tag--magma { color: var(--blood-text); }
   .tag--stone { color: var(--stone-300); }
 
   /* data panel */
@@ -337,10 +338,10 @@
     border: 1px solid var(--tech-line); background: rgba(9,8,8,0.6);
     font-size: 1.05rem;
   }
-  .dataplate dt, .dataplate dd { margin: 0; padding: 10px 14px; border-bottom: 1px solid rgba(108,200,222,0.15); }
+  .dataplate dt, .dataplate dd { margin: 0; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .dataplate dt {
     font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--tech); border-right: 1px solid rgba(108,200,222,0.15); padding-top: 13px;
+    color: var(--tech); border-right: 1px solid rgba(255,255,255,0.08); padding-top: 13px;
   }
   .dataplate dt:nth-last-of-type(1), .dataplate dd:last-of-type { border-bottom: 0; }
   .redacted-inline {
@@ -362,7 +363,7 @@
       radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.06), transparent 70%),
       linear-gradient(180deg, #25221f, #121110);
     border-top: 4px solid var(--copper);
-    border-bottom: 4px solid var(--livery-copper);
+    border-bottom: 4px solid var(--accent-dim);
     box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), inset 0 -10px 20px rgba(0,0,0,0.5), 0 12px 30px rgba(0,0,0,0.5);
     clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px), 0 16px);
   }
@@ -429,9 +430,9 @@
     position: relative; padding: clamp(14px, 3vw, 28px);
     border: 1px solid var(--tech-line);
     background:
-      linear-gradient(rgba(108,200,222,0.06) 1px, transparent 1px) 0 0 / 20px 20px,
-      linear-gradient(90deg, rgba(108,200,222,0.06) 1px, transparent 1px) 0 0 / 20px 20px,
-      rgba(10, 18, 24, 0.75);
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 20px 20px,
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 20px 20px,
+      rgba(12, 11, 11, 0.75);
   }
   .figure-frame::before, .figure-frame::after {
     content: ''; position: absolute; width: 14px; height: 14px; border: 2px solid var(--tech);
@@ -553,7 +554,7 @@
   }
   .org-star__stamp {
     position: absolute; top: -13px; right: 16px; transform: rotate(3deg);
-    background: var(--basalt-900); border: 2px solid var(--magma); color: #f08b64;
+    background: var(--basalt-900); border: 2px solid var(--magma); color: var(--blood-text);
     font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.22em; padding: 3px 10px; text-transform: uppercase;
   }
   .org-star__head { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
@@ -733,7 +734,7 @@
   .wipe {
     position: fixed; inset: 0; z-index: 80; pointer-events: none; transform: translateY(100%);
     background: linear-gradient(180deg,
-      var(--copper) 0 3px, #2a2725 3px 16%, #1b1918 16% 34%, var(--livery-copper) 34% 35%,
+      var(--accent) 0 3px, #2a2725 3px 16%, #1b1918 16% 34%, var(--accent-dim) 34% 35%,
       #3b3734 35% 52%, #131212 52% 70%, var(--accent-dim) 70% 71%, #0c0b0b 71% 100%);
   }
 
@@ -748,7 +749,7 @@
   .codex-mode .toc ol { position: relative; padding-left: 14px; }
   .codex-mode .toc ol::before {
     content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 5px; border-radius: 3px;
-    background: linear-gradient(180deg, #6a6150, var(--livery-copper) 20%, #3c4a52 40%, #7a3a24 60%, #3b3734 80%, #050505);
+    background: linear-gradient(180deg, #6a6458, #4a4540 30%, #33302d 55%, #201e1c 80%, #050505);
   }
   .codex-mode .toc ol::after {
     content: ''; position: absolute; left: -3px; top: calc(4px + var(--depth, 0) * (100% - 19px)); width: 11px; height: 11px;
@@ -957,7 +958,7 @@
       <path d="M0 6 Q250 1 500 6 T1000 6 V60 H0Z" style="fill:var(--slate-500)"/>
       <path d="M0 15 Q250 10 500 15 T1000 15 V60 H0Z" style="fill:var(--slate-600)"/>
       <path d="M0 25 Q250 30 500 25 T1000 25 V60 H0Z" style="fill:#4b5157"/>
-      <path d="M0 31 Q250 36 500 31 T1000 31 V60 H0Z" style="fill:var(--livery-copper)"/>
+      <path d="M0 31 Q250 36 500 31 T1000 31 V60 H0Z" style="fill:var(--accent-dim)"/>
       <path d="M0 34 Q250 39 500 34 T1000 34 V60 H0Z" style="fill:var(--basalt-700)"/>
       <path d="M0 45 Q250 41 500 45 T1000 45 V60 H0Z" style="fill:#2d3338"/>
       <path d="M0 53 Q250 50 500 53 T1000 53 V60 H0Z" style="fill:var(--basalt-950)"/>
@@ -1133,7 +1134,7 @@
 
         <ol class="core reveal" aria-label="Core sample of the chapter's early history, newest first">
           <li>
-            <div class="core__band" style="--band:#6a6150" data-depth="0 m"></div>
+            <div class="core__band" style="--band:#6a6458" data-depth="0 m"></div>
             <div class="core__body">
               <span class="core__label">Surface · present</span>
               <h3>The homeworld</h3>
@@ -1149,7 +1150,7 @@
             </div>
           </li>
           <li>
-            <div class="core__band" style="--band:#3c4a52"></div>
+            <div class="core__band" style="--band:#3e3a36"></div>
             <div class="core__body">
               <span class="core__label">Layer · centuries of settling</span>
               <h3>Guests of the forge</h3>
@@ -1158,7 +1159,7 @@
             </div>
           </li>
           <li>
-            <div class="core__band" style="--band:#7a3a24"></div>
+            <div class="core__band" style="--band:#5a2420"></div>
             <div class="core__body">
               <span class="core__label">Layer · first Break</span>
               <h3>The first Long Fallow</h3>
@@ -1590,7 +1591,7 @@
               <!-- link labels (hidden on small screens) -->
               <text class="t-lbl" x="334" y="160">scrutiny</text>
               <text class="t-lbl" x="446" y="266">main conflict</text>
-              <text class="t-lbl" x="540" y="335">caught between</text>
+              <text class="t-lbl" x="498" y="335" text-anchor="end">caught between</text>
               <text class="t-lbl" x="268" y="568">ritual vs shortcut</text>
               <text class="t-lbl" x="196" y="272" text-anchor="middle">castle vs home</text>
 
